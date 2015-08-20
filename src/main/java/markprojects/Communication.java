@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class Communication {
 
-    private Station source;
-    private List<Station> destination;
+    private StationMetaData source;
+    private List<StationMetaData> destination;
     private long timeSent;
     private long lifetime;
 
@@ -32,5 +32,19 @@ public class Communication {
         this.lifetime = l;
     }
 
+    public long isAlive(long time) {
+        return time < (timeSent + lifetime);
+    }
+
+
+    public String toString() {
+        StringBuilder b = new StringBuilder();
+        b.append(source.toString());
+
+        for(StationMetaData smd : destination) {
+            b.append("\n\t-> " + smd.toString());
+        }
+        return b.toString();
+    }
 }
 
