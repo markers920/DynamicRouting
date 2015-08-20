@@ -33,4 +33,8 @@ public class StationMetaData {
         ret.position = Pair.of(position.getLeft(), position.getRight());
         return ret;
     }
+
+    public String toString() {
+        return name + " @ (" + position.getLeft() + ", " + position.getRight() + ")";
+    }
 }
