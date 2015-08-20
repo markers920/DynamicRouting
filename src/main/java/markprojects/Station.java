@@ -1,40 +1,35 @@
 package markprojects;
 
-import org.apache.commons.lang3.tuple.Pair;
+//import org.apache.commons.lang3.tuple.Pair;
+//import StationMetaData;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Station {
 
-    private String name;
-    private Pair<Double, Double> position;
-    private Set<Communication> currentBroadcasts = new HashSet<Communication>();
+    private StationMetaData stationMetaData = new StationMetaData();
+    private List<Communication> currentBroadcasts = new ArrayList<Communication>();
 
     public Station(String n) {
-        this.name = n;
+        this.stationMetaData.setName(n);
     }
 
     public Station(String n, double x, double y) {
-        this.name = n;
+        this.stationMetaData.setName(n);
         setPosition(x, y);
     }
 
 
     public void setPosition(double x, double y) {
-        position = Pair.of(Double.valueOf(x), Double.valueOf(y));
+        this.stationMetaData.setPosition(x, y);
     }
 
 
-    //TODO: remove this and use refs down the road
-    public Station clone() {
-        return new Station(position.getLeft(), position.getRight());
+    public StationMetaData clone() {
+        return this.stationMetaData.clone();
+        //return new Station(this.name, position.getLeft(), position.getRight());
     }
 
-    public void update(long time) {
-        for(Communication c : currentBroadcasts) {
-            if(!c.isAlive()) {
-                System.out.println("dead: " + c.toString());
-            }
-        }
-    }
 }
 
 
