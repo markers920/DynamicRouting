@@ -1,7 +1,7 @@
 package markprojects;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Communication {
 
@@ -13,7 +13,7 @@ public class Communication {
     public Communication(Station src, Station dst, long t, long l) {
         this.source = src.clone();
 
-        this.destination = new ArrayList<Station>();
+        this.destination = new ArrayList<StationMetaData>();
         this.destination.add(dst.clone());
 
         this.timeSent = t;
@@ -23,7 +23,7 @@ public class Communication {
     public Communication(Station src, List<Station> dst, long t, long l) {
         this.source = src.clone();
 
-        this.destination = new ArrayList<Station>();
+        this.destination = new ArrayList<StationMetaData>();
         for(Station d : dst) {
             this.destination.add(d.clone());
         }
@@ -32,7 +32,7 @@ public class Communication {
         this.lifetime = l;
     }
 
-    public long isAlive(long time) {
+    public boolean isAlive(long time) {
         return time < (timeSent + lifetime);
     }
 
