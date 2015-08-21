@@ -1,8 +1,15 @@
 package markprojects;
 
+import java.awt.Color;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 public class StationMetaData {
+    
+    //TODO: prob make these dynamic
+    public final Color stationColor = Color.WHITE;
+    public final int stationSize = 5;
+    public final int pingRepeatPeriod = 50;
 
     private String name;
     private Pair<Double, Double> position;
@@ -21,6 +28,22 @@ public class StationMetaData {
 
     public void setPosition(double x, double y) {
         this.position = Pair.of(Double.valueOf(x), Double.valueOf(y));
+    }
+    
+    public double getx() {
+        return position.getLeft();
+    }
+    
+    public double gety() {
+        return position.getRight();
+    }
+    
+    public int getIntx() {
+        return (int)getx();
+    }
+    
+    public int getInty() {
+        return (int)gety();
     }
 
     public Pair<Double, Double> getPosition() {
