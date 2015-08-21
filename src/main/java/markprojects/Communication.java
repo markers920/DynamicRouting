@@ -11,21 +11,21 @@ public class Communication {
     private long lifetime;
 
     public Communication(Station src, Station dst, long t, long l) {
-        this.source = src.clone();
+        this.source = src.getMetaData();
 
         this.destination = new ArrayList<StationMetaData>();
-        this.destination.add(dst.clone());
+        this.destination.add(dst.getMetaData());
 
         this.timeSent = t;
         this.lifetime = l;
     }
 
     public Communication(Station src, List<Station> dst, long t, long l) {
-        this.source = src.clone();
+        this.source = src.getMetaData();
 
         this.destination = new ArrayList<StationMetaData>();
         for(Station d : dst) {
-            this.destination.add(d.clone());
+            this.destination.add(d.getMetaData());
         }
 
         this.timeSent = t;

@@ -25,7 +25,7 @@ public class Station {
     }
 
 
-    public StationMetaData clone() {
+    public StationMetaData getMetaData() {
         return this.stationMetaData.clone();
         //return new Station(this.name, position.getLeft(), position.getRight());
     }
