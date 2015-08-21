@@ -44,6 +44,11 @@ public class Communication {
         for(StationMetaData smd : destination) {
             b.append("\n\t-> " + smd.toString());
         }
+        
+        b.append("\n\t*** time sent:   " + timeSent);
+        b.append("\n\t*** lifetime:    " + lifetime);
+        b.append("\n\t*** termination: " + (timeSent+lifetime));
+        
         return b.toString();
     }
 }
