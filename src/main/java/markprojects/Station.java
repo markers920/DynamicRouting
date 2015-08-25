@@ -12,6 +12,7 @@ public class Station {
 
     private StationMetaData stationMetaData = new StationMetaData();
     private List<Communication> currentBroadcasts = new ArrayList<Communication>();
+    private long lastTimeReceivedTargetedCommunication = 0;	//TODO: rename this
 
     public Station(String n) {
         this.stationMetaData.setName(n);
@@ -62,7 +63,8 @@ public class Station {
 			if(Math.abs(distance-signalRadius) < 1) {
 				//reached target station
 				if(communication.getDestination().equals(this.getMetaData())) {
-		    		System.out.println("Message Received: " + stationMetaData.getName() + " /// " + communication.toString());
+		    		//System.out.println("Message Received: " + stationMetaData.getName() + " /// " + communication.toString());
+					lastTimeReceivedTargetedCommunication = time;
 		    	}
 				
 				//not target station
@@ -96,6 +98,7 @@ public class Station {
             	double signalRadius = communication.getRadius(time);
                 
                 g.setColor(communication.getColor());
+                
                 g.drawOval(
                         (int)(stationMetaData.getx() - signalRadius), 
                         (int)(stationMetaData.gety() - signalRadius), 
@@ -106,11 +109,22 @@ public class Station {
         
         //draw station
         g.setColor(stationMetaData.stationColor);
-        g.fillOval(
-                (int)(stationMetaData.getIntx() - (stationMetaData.stationSize/2)), 
-                (int)(stationMetaData.getInty() - (stationMetaData.stationSize/2)), 
-                stationMetaData.stationSize, 
-                stationMetaData.stationSize);
+        if(time - lastTimeReceivedTargetedCommunication < Constants.RECEIVED_TIME_WINDOW) {
+        	int largerSize = 4*stationMetaData.stationSize;
+        	g.fillOval(
+	                (int)(stationMetaData.getIntx() - (largerSize/2)), 
+	                (int)(stationMetaData.getInty() - (largerSize/2)), 
+	                largerSize, 
+	                largerSize);
+        }
+        
+        else {
+	        g.fillOval(
+	                (int)(stationMetaData.getIntx() - (stationMetaData.stationSize/2)), 
+	                (int)(stationMetaData.getInty() - (stationMetaData.stationSize/2)), 
+	                stationMetaData.stationSize, 
+	                stationMetaData.stationSize);
+        }
         
         g.setColor(origionalColor);
     }
