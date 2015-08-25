@@ -35,7 +35,9 @@ public class Station {
     
     
     public void addCommunication(Station dst, long startTime, long lifetime) {
-    	Color c = randomColor();
+    	Color c = randomColor();   //the color of this communication
+    	
+    	//send out several copies of this message at a regular interval
         for(long pingIndex = startTime; stationMetaData.pingRepeatPeriod*pingIndex < lifetime; pingIndex++) {
             long pingStart = stationMetaData.pingRepeatPeriod*pingIndex;
             currentBroadcasts.add(
@@ -45,6 +47,11 @@ public class Station {
     
     
     public void receiveCommunication(long time, Communication communication) {
+    	if(communication.getDestination().equals(this.getMetaData())) {
+    		System.out.println("Message Received: " + communication.toString());
+    	}
+    	
+    	
     	if(communication.isAlive(time) && !communication.getSource().getName().equals(this.stationMetaData.getName())) {
     		//distance from comm origin to this station
 	    	double distance = Math.pow(communication.getOriginx() - this.stationMetaData.getx(), 2.0);
