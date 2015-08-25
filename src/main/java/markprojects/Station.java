@@ -41,12 +41,16 @@ public class Station {
     public void addCommunication(long message, Station dst, long startTime, long lifetime) {
     	Color c = randomColor();   //the color of this communication
     	
-    	//send out several copies of this message at a regular interval
-        for(long pingIndex = startTime; stationMetaData.pingRepeatPeriod*pingIndex < lifetime; pingIndex++) {
-            long pingStart = stationMetaData.pingRepeatPeriod*pingIndex;
-            currentBroadcasts.add(
-                    new Communication(message, stationMetaData.getx(), stationMetaData.gety(), this, dst, pingStart, lifetime-pingStart, c));
-        }
+    	currentBroadcasts.add(
+                new Communication(
+                		message, 
+                		stationMetaData.getx(), 
+                		stationMetaData.gety(), 
+                		this, 
+                		dst, 
+                		startTime, 
+                		lifetime, 
+                		c));
     }
     
     
