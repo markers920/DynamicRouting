@@ -4,7 +4,6 @@ import java.awt.Color;
 //import java.util.ArrayList;
 //import java.util.List;
 import java.awt.Graphics2D;
-import java.util.Random;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -50,8 +49,12 @@ public class Communication {
         return this.color;
     }
 
+    public long terminationTime() {
+    	return timeSent + lifetime;
+    }
+    
     public boolean isAlive(long time) {
-        return time < (timeSent + lifetime);
+        return time < terminationTime();
     }
     
     public long getAge(long time) {
