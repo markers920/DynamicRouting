@@ -9,7 +9,7 @@ public class StationMetaData {
     //TODO: prob make these dynamic
     public final Color stationColor = Color.WHITE;
     public final int stationSize = 5;
-    public final int pingRepeatPeriod = 50;
+    public final long pingRepeatPeriod = Constants.PING_REPEAT_PERIOD;
 
     private String name;
     private Pair<Double, Double> position;
