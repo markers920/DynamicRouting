@@ -47,11 +47,9 @@ public class Station {
     
     
     public void receiveCommunication(long time, Communication communication) {
-    	if(communication.getDestination().equals(this.getMetaData())) {
-    		System.out.println("Message Received: " + communication.toString());
-    	}
-    	
-    	
+    	//if communication still alive
+    	//and
+    	//this isn't the source station
     	if(communication.isAlive(time) && !communication.getSource().getName().equals(this.stationMetaData.getName())) {
     		//distance from comm origin to this station
 	    	double distance = Math.pow(communication.getOriginx() - this.stationMetaData.getx(), 2.0);
@@ -60,16 +58,25 @@ public class Station {
 			
 			double signalRadius = communication.getRadius(time);
 			
+			//if station is in the communication's current location
 			if(Math.abs(distance-signalRadius) < 1) {
-				currentBroadcasts.add(
-						new Communication(
-								this.stationMetaData.getx(), 
-								this.stationMetaData.gety(), 
-								communication.getSource(), 
-								communication.getDestination(), 
-								time, 
-								1000,		//TODO:fix this, set lifetime to termination time in comms object
-								communication.getColor()));
+				//reached target station
+				if(communication.getDestination().equals(this.getMetaData())) {
+		    		System.out.println("Message Received: " + stationMetaData.getName() + " /// " + communication.toString());
+		    	}
+				
+				//not target station
+				else {
+					currentBroadcasts.add(
+							new Communication(
+									this.stationMetaData.getx(), 
+									this.stationMetaData.gety(), 
+									communication.getSource(), 
+									communication.getDestination(), 
+									time, 
+									1000,		//TODO:fix this, set lifetime to termination time in comms object
+									communication.getColor()));
+				}
 			}
     	}
     }
