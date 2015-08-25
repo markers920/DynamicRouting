@@ -12,10 +12,8 @@ import com.xuggle.mediatool.IMediaWriter;
 import com.xuggle.mediatool.ToolFactory;
 import com.xuggle.xuggler.ICodec;
 
-/**
- * Hello world!
- *
- */
+// saved locally: C:\Users\markers\git\DynamicRouting
+
 public class App {
     
     private static final int WINDOW_SIZE_X = 1280;
@@ -25,7 +23,7 @@ public class App {
     
     private static final String MOVIE_OUTPUT_FILE = "./movie.mp4";
     
-    private static Random random = new Random();
+    private static Random random = new Random(0);
     
     private static final Color BACKGROUND_COLOR = Color.BLACK;
     private static final int BORDER_SIZE = 10;
