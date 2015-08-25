@@ -94,7 +94,7 @@ public class Station {
 									communication.getSource(), 
 									communication.getDestination(), 
 									time, 
-									200,		//TODO:fix this, set lifetime to termination time in comms object
+									(long)(communication.getLifetime()/Constants.LIFETIME_DECAY_RATIO),
 									communication.getColor()));
 				}
 			}
