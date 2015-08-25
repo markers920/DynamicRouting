@@ -54,6 +54,10 @@ public class Communication {
     public long getMessage() {
     	return message;
     }
+    
+    public long getLifetime() {
+    	return lifetime;
+    }
 
     public long terminationTime() {
     	return timeSent + lifetime;
