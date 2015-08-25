@@ -14,7 +14,7 @@ public class Station {
 
     private StationMetaData stationMetaData = new StationMetaData();
     private List<Communication> currentBroadcasts = new ArrayList<Communication>();
-    private long lastTimeReceivedTargetedCommunication = 0;	//TODO: rename this
+    private long lastTimeReceivedTargetedCommunication = -1000;	//TODO: rename this
     private Set<Long> messagesReceived = new HashSet<Long>();
 
     public Station(String n) {
