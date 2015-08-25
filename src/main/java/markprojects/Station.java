@@ -94,7 +94,7 @@ public class Station {
 									communication.getSource(), 
 									communication.getDestination(), 
 									time, 
-									(long)(communication.getLifetime()/Constants.LIFETIME_DECAY_RATIO),
+									(long)(communication.getLifetime()*Constants.LIFETIME_DECAY_RATIO),
 									communication.getColor()));
 				}
 			}
