@@ -60,4 +60,9 @@ public class StationMetaData {
     public String toString() {
         return name + " @ (" + position.getLeft() + ", " + position.getRight() + ")";
     }
+    
+    //TODO: this may nee more context
+    public boolean equals(StationMetaData other) {
+    	return this.name.equalsIgnoreCase(other.getName());
+    }
 }
