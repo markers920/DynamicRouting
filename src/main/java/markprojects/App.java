@@ -1,6 +1,5 @@
 package markprojects;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -15,46 +14,28 @@ import com.xuggle.xuggler.ICodec;
 // saved locally: C:\Users\markers\git\DynamicRouting
 
 public class App {
-    
-    private static final int WINDOW_SIZE_X = 1280;
-    private static final int WINDOW_SIZE_Y = 1024;
-    private static final int FRAMES_PER_SECOND = 30;
-    private static final int NUMBER_OF_FRAMES = FRAMES_PER_SECOND*20;
-    
-    private static final String MOVIE_OUTPUT_FILE = "./movie.mp4";
-    
-    private static Random random = new Random(0);
-    
-    private static final Color BACKGROUND_COLOR = Color.BLACK;
-    private static final int BORDER_SIZE = 10;
-    private static final int NUMBER_OF_STATIONS = 15;
+    private static Random random = new Random(1);
     private static List<Station> stations = new ArrayList<Station>();
     
     
     public static void main( String[] args ) {
         
         initilizeStations();
+        initCommunications();
         
-        stations.get(0).addCommunication(1, stations.get(1), 0, 400);
-        stations.get(1).addCommunication(2, stations.get(2), 0, 400);
-        stations.get(2).addCommunication(3, stations.get(3), 0, 400);
-        stations.get(3).addCommunication(4, stations.get(4), 0, 300);
-        stations.get(4).addCommunication(5, stations.get(5), 0, 300);
+        final IMediaWriter writer = ToolFactory.makeWriter(Constants.MOVIE_OUTPUT_FILE);
+        writer.addVideoStream(0, 0, ICodec.ID.CODEC_ID_MPEG4, Constants.WINDOW_SIZE_X, Constants.WINDOW_SIZE_Y);
         
-        
-        final IMediaWriter writer = ToolFactory.makeWriter(MOVIE_OUTPUT_FILE);
-        writer.addVideoStream(0, 0, ICodec.ID.CODEC_ID_MPEG4, WINDOW_SIZE_X, WINDOW_SIZE_Y);
-        
-        BufferedImage img = new BufferedImage(WINDOW_SIZE_X, WINDOW_SIZE_Y, BufferedImage.TYPE_3BYTE_BGR);
+        BufferedImage img = new BufferedImage(Constants.WINDOW_SIZE_X, Constants.WINDOW_SIZE_Y, BufferedImage.TYPE_3BYTE_BGR);
         
         Graphics2D g = (Graphics2D)img.getGraphics();
         List<Communication> allBroadcasts = new ArrayList<Communication>();
-        for(long frameIndex = 0; frameIndex < NUMBER_OF_FRAMES; frameIndex++) {
-            System.out.println("frameIndex: " + frameIndex + " / " + NUMBER_OF_FRAMES);
+        for(long frameIndex = 0; frameIndex < Constants.NUMBER_OF_FRAMES; frameIndex++) {
+            System.out.println("frameIndex: " + frameIndex + " / " + Constants.NUMBER_OF_FRAMES);
             
             //fill background
-            g.setColor(BACKGROUND_COLOR);
-            g.fillRect(0, 0, WINDOW_SIZE_X, WINDOW_SIZE_Y);
+            g.setColor(Constants.BACKGROUND_COLOR);
+            g.fillRect(0, 0, Constants.WINDOW_SIZE_X, Constants.WINDOW_SIZE_Y);
             
             
             allBroadcasts.clear();
@@ -75,7 +56,7 @@ public class App {
             }
             
             
-            writer.encodeVideo(0, img, (frameIndex * (1000/FRAMES_PER_SECOND)), TimeUnit.MILLISECONDS);
+            writer.encodeVideo(0, img, (frameIndex * (1000/Constants.FRAMES_PER_SECOND)), TimeUnit.MILLISECONDS);
         }
         
         writer.close();
@@ -85,10 +66,35 @@ public class App {
     }
     
     private static void initilizeStations() {
-        for(int stationIndex = 0; stationIndex < NUMBER_OF_STATIONS; stationIndex++) {
-            int x = (int)((BORDER_SIZE/2.0) + random.nextInt(WINDOW_SIZE_X-BORDER_SIZE));
-            int y = (int)((BORDER_SIZE/2.0) + random.nextInt(WINDOW_SIZE_Y-BORDER_SIZE));
+        for(int stationIndex = 0; stationIndex < Constants.NUMBER_OF_STATIONS; stationIndex++) {
+            int x = (int)((Constants.BORDER_SIZE/2.0) + random.nextInt(Constants.WINDOW_SIZE_X-Constants.BORDER_SIZE));
+            int y = (int)((Constants.BORDER_SIZE/2.0) + random.nextInt(Constants.WINDOW_SIZE_Y-Constants.BORDER_SIZE));
+        	//double r = ((double)stationIndex) / NUMBER_OF_STATIONS;
+        	//int x =  (int)(r*WINDOW_SIZE_X);
+        	//int y =  (int)(r*WINDOW_SIZE_X);
             stations.add(new Station("station-" + stationIndex, x, y));
         }
+    }
+    
+    private static void initCommunications() {
+    	int minStartTime = Integer.MAX_VALUE;
+    	int maxStartTime = Integer.MIN_VALUE;
+    	for(int cIdx = 0; cIdx < Constants.NUMBER_OF_COMMUNICATIONS; cIdx++) {
+    		//get random source and destination index values
+    		int srcIdx = random.nextInt(Constants.NUMBER_OF_STATIONS);
+    		int dstIdx = srcIdx;
+    		do {
+    			dstIdx = random.nextInt(Constants.NUMBER_OF_STATIONS);
+    		}while(dstIdx == srcIdx);
+    		
+    		int startTime = random.nextInt(Constants.MAX_START_TIME);	//delay
+    		minStartTime = Math.min(minStartTime, startTime);
+    		maxStartTime = Math.max(maxStartTime, startTime);
+    		
+            stations.get(srcIdx).addCommunication(cIdx, stations.get(dstIdx), startTime, 400);
+    	}
+    	
+    	System.out.println("MIN Start Time: " + minStartTime);
+    	System.out.println("MAX Start Time: " + maxStartTime);
     }
 }
