@@ -14,6 +14,7 @@ public class Station {
 
     private StationMetaData stationMetaData = new StationMetaData();
     private List<Communication> currentBroadcasts = new ArrayList<Communication>();
+    private List<Communication> deadBroadcasts = new ArrayList<Communication>();
     private long lastTimeReceivedTargetedCommunication = -1000;	//TODO: rename this
     private Set<Long> messagesReceived = new HashSet<Long>();
 
@@ -71,10 +72,8 @@ public class Station {
 			if(Math.abs(distance-signalRadius) < 1) {
 
 				//if this station is already broadcasting this message
-	    		for(Communication cb : currentBroadcasts) {
-	    			if(cb.getMessage() == communication.getMessage()) {
-	    				return;
-	    			}
+	    		if(communicationAlreadySeen(communication)) {
+	    			return;
 	    		}
 	    		
 	    		
@@ -105,6 +104,22 @@ public class Station {
     	}
     }
     
+    private boolean communicationAlreadySeen(Communication communication) {
+    	for(Communication cb : currentBroadcasts) {
+			if(cb.getMessage() == communication.getMessage()) {
+				return true;
+			}
+		}
+		
+		for(Communication cb : deadBroadcasts) {
+			if(cb.getMessage() == communication.getMessage()) {
+				return true;
+			}
+		}
+		
+		return false;
+    }
+    
     public List<Communication> getBroadcasts() {
     	return currentBroadcasts;
     }
@@ -132,6 +147,7 @@ public class Station {
             }
         }
         currentBroadcasts.removeAll(deadComms);
+        deadBroadcasts.addAll(deadComms);
         
         //draw station
         g.setColor(stationMetaData.stationColor);

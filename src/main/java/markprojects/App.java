@@ -77,7 +77,13 @@ public class App {
     }
     
     private static void initCommunications() {
-    	int minStartTime = Integer.MAX_VALUE;
+    	//left most to right most
+    	stations.get(0).setPosition(Constants.BORDER_SIZE, Constants.WINDOW_SIZE_Y/2);
+    	stations.get(1).setPosition(Constants.WINDOW_SIZE_X-Constants.BORDER_SIZE, Constants.WINDOW_SIZE_Y/2);
+    	long initialLifetime = 320;
+    	stations.get(0).addCommunication(0l, stations.get(1), 0, initialLifetime);
+    	
+    	/*int minStartTime = Integer.MAX_VALUE;
     	int maxStartTime = Integer.MIN_VALUE;
     	for(int cIdx = 0; cIdx < Constants.NUMBER_OF_COMMUNICATIONS; cIdx++) {
     		//get random source and destination index values
@@ -95,6 +101,6 @@ public class App {
     	}
     	
     	System.out.println("MIN Start Time: " + minStartTime);
-    	System.out.println("MAX Start Time: " + maxStartTime);
+    	System.out.println("MAX Start Time: " + maxStartTime);*/
     }
 }
