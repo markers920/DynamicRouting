@@ -8,7 +8,7 @@ public class Constants {
 	public static final int WINDOW_SIZE_X = 1920;
     public static final int WINDOW_SIZE_Y = 1080;
     public static final int FRAMES_PER_SECOND = 30;
-    public static final int NUMBER_OF_FRAMES = FRAMES_PER_SECOND*20;
+    public static final int NUMBER_OF_FRAMES = FRAMES_PER_SECOND*30;
     
     public static final String MOVIE_OUTPUT_FILE = "./movie.mp4";
     
@@ -20,8 +20,7 @@ public class Constants {
     
     public static final double SIGNAL_SPEED = 1;	//pixels per unit time
     public static final long RECEIVED_TIME_WINDOW = 10;
-    public static final long PING_REPEAT_PERIOD = 100;
-    public static final double LIFETIME_DECAY_RATIO = 0.5;
+    public static final double LIFETIME_DECAY_RATIO = 0.8;
 }
 
 
