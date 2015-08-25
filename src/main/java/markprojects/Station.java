@@ -112,7 +112,8 @@ public class Station {
     public void paint(long time, Graphics2D g) {
         Color origionalColor = g.getColor();
         
-        //draw comms
+        //draw comms and collect the dead comms
+        Set<Communication> deadComms = new HashSet<Communication>();
         for(Communication communication : currentBroadcasts) {
             if(communication.isAlive(time)) {
             	double signalRadius = communication.getRadius(time);
@@ -125,7 +126,12 @@ public class Station {
                         (int)(2*signalRadius), 
                         (int)(2*signalRadius));
             }
+            
+            else {
+            	deadComms.add(communication);
+            }
         }
+        currentBroadcasts.removeAll(deadComms);
         
         //draw station
         g.setColor(stationMetaData.stationColor);
