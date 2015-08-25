@@ -35,14 +35,14 @@ public class Station {
     }
     
     
-    public void addCommunication(Station dst, long startTime, long lifetime) {
+    public void addCommunication(long message, Station dst, long startTime, long lifetime) {
     	Color c = randomColor();   //the color of this communication
     	
     	//send out several copies of this message at a regular interval
         for(long pingIndex = startTime; stationMetaData.pingRepeatPeriod*pingIndex < lifetime; pingIndex++) {
             long pingStart = stationMetaData.pingRepeatPeriod*pingIndex;
             currentBroadcasts.add(
-                    new Communication(stationMetaData.getx(), stationMetaData.gety(), this, dst, pingStart, lifetime-pingStart, c));
+                    new Communication(message, stationMetaData.getx(), stationMetaData.gety(), this, dst, pingStart, lifetime-pingStart, c));
         }
     }
     
@@ -71,6 +71,7 @@ public class Station {
 				else {
 					currentBroadcasts.add(
 							new Communication(
+									communication.getMessage(),
 									this.stationMetaData.getx(), 
 									this.stationMetaData.gety(), 
 									communication.getSource(), 
@@ -93,8 +94,6 @@ public class Station {
         //draw comms
         for(Communication communication : currentBroadcasts) {
             if(communication.isAlive(time)) {
-                //long age = communication.getAge(time);
-                //double width = age * Constants.SIGNAL_SPEED;
             	double signalRadius = communication.getRadius(time);
                 
                 g.setColor(communication.getColor());

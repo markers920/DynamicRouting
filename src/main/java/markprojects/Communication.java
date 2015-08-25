@@ -12,7 +12,7 @@ public class Communication {
     //TODO: prob make these dynamic
     private Color color;	// = Color.YELLOW;
     
-    
+    private long message;
     private StationMetaData source;
     private Pair<Double, Double> origin;
     private StationMetaData destination;
@@ -20,7 +20,8 @@ public class Communication {
     private long lifetime;
     
 
-    public Communication(double x, double y, Station src, Station dst, long t, long l, Color c) {
+    public Communication(long message, double x, double y, Station src, Station dst, long t, long l, Color c) {
+    	this.message = message;
         this.origin = Pair.of(Double.valueOf(x), Double.valueOf(y));
         
         this.source = src.getMetaData();
@@ -32,7 +33,8 @@ public class Communication {
         this.color = c;
     }
     
-    public Communication(double x, double y, StationMetaData src, StationMetaData dst, long t, long l, Color c) {
+    public Communication(long message, double x, double y, StationMetaData src, StationMetaData dst, long t, long l, Color c) {
+    	this.message = message;
         this.origin = Pair.of(Double.valueOf(x), Double.valueOf(y));
         
         this.source = src;
@@ -47,6 +49,10 @@ public class Communication {
     
     public Color getColor() {
         return this.color;
+    }
+    
+    public long getMessage() {
+    	return message;
     }
 
     public long terminationTime() {

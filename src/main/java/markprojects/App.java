@@ -35,11 +35,11 @@ public class App {
         
         initilizeStations();
         
-        stations.get(0).addCommunication(stations.get(1), 0, 400);
-        stations.get(1).addCommunication(stations.get(2), 0, 400);
-        stations.get(2).addCommunication(stations.get(3), 0, 400);
-        stations.get(3).addCommunication(stations.get(4), 0, 300);
-        stations.get(4).addCommunication(stations.get(5), 0, 300);
+        stations.get(0).addCommunication(random.nextLong(), stations.get(1), 0, 400);
+        stations.get(1).addCommunication(random.nextLong(), stations.get(2), 0, 400);
+        stations.get(2).addCommunication(random.nextLong(), stations.get(3), 0, 400);
+        stations.get(3).addCommunication(random.nextLong(), stations.get(4), 0, 300);
+        stations.get(4).addCommunication(random.nextLong(), stations.get(5), 0, 300);
         
         
         final IMediaWriter writer = ToolFactory.makeWriter(MOVIE_OUTPUT_FILE);
